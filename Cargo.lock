@@ -2428,6 +2428,28 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "643cb0b8d4fcc284004d5fd0d67ccf61dfffadb7f75e1e71bc420f4688a3a704"
 
 [[package]]
+name = "lock-cli"
+version = "0.1.0"
+dependencies = [
+ "anchor-client",
+ "anchor-lang",
+ "anchor-spl",
+ "anyhow",
+ "borsh 0.10.4",
+ "borsh-derive 0.10.4",
+ "clap 4.5.21",
+ "common",
+ "rand 0.7.3",
+ "raydium-amm-v3",
+ "raydium-cp-swap",
+ "solana-client",
+ "solana-sdk",
+ "spl-associated-token-account",
+ "spl-token 4.0.0",
+ "spl-token-2022 0.9.0",
+]
+
+[[package]]
 name = "lock_api"
 version = "0.4.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"

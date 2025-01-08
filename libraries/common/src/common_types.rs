@@ -76,6 +76,8 @@ pub struct CommonConfig {
     raydium_amm_program: Option<Pubkey>,
     #[clap(global = true, long = "config.openbook_program")]
     openbook_program: Option<Pubkey>,
+    #[clap(global = true, long = "config.lock_program")]
+    raydium_lock_program: Option<Pubkey>,
     #[clap(global = true, long = "config.slippage")]
     slippage_bps: Option<u64>,
     #[clap(global = true, short, long, action)]
@@ -103,6 +105,9 @@ impl Default for CommonConfig {
             openbook_program: Some(
                 Pubkey::from_str("srmqPvymJeFKQ4zGQed1GFppgkRHL9kaELCbyksJtPX").unwrap(),
             ),
+            raydium_lock_program: Some(
+                Pubkey::from_str("LockrWmn6K5twhz3y9w1dQERbmgSaRkfnTeTKbpofwE").unwrap(),
+            ),
             slippage_bps: Some(100),
             simulate: false,
         }
@@ -126,6 +131,9 @@ impl Default for CommonConfig {
             ),
             openbook_program: Some(
                 Pubkey::from_str("EoTcMgcDRTJVZDMZWBoU6rhYHZfkNTVEAfz3uUJRcYGj").unwrap(),
+            ),
+            raydium_lock_program: Some(
+                Pubkey::from_str("DLockwT7X7sxtLmGH9g5kmfcjaBtncdbUmi738m5bvQC").unwrap(),
             ),
             slippage_bps: Some(100),
             simulate: false,
@@ -190,6 +198,14 @@ impl CommonConfig {
                     self.openbook_program = Some(Pubkey::from_str(openbook_program).unwrap());
                 }
             }
+            if let Some(raydium_lock_program) =
+                program.get("raydium_lock_program").and_then(Value::as_str)
+            {
+                if !raydium_lock_program.is_empty() {
+                    self.raydium_lock_program =
+                        Some(Pubkey::from_str(raydium_lock_program).unwrap());
+                }
+            }
         }
         if let Some(info) = config_file_value.get("info") {
             if let Some(wallet_path) = info.get("wallet_path").and_then(Value::as_str) {
@@ -225,6 +241,9 @@ impl CommonConfig {
         }
         if command.openbook_program.is_some() {
             self.openbook_program = command.openbook_program;
+        }
+        if command.raydium_lock_program.is_some() {
+            self.raydium_lock_program = command.raydium_lock_program;
         }
         if command.slippage_bps.is_some() {
             self.slippage_bps = command.slippage_bps;
@@ -296,6 +315,17 @@ impl CommonConfig {
     }
     pub fn set_openbook_program(&mut self, openbook_program: &str) {
         self.openbook_program = Some(Pubkey::from_str(openbook_program).unwrap());
+    }
+
+    pub fn lock_program(&self) -> Pubkey {
+        if self.raydium_lock_program.is_none() {
+            Pubkey::default()
+        } else {
+            self.raydium_lock_program.unwrap()
+        }
+    }
+    pub fn set_lock_program(&mut self, lock_program: &str) {
+        self.raydium_lock_program = Some(Pubkey::from_str(lock_program).unwrap());
     }
 
     pub fn slippage(&self) -> u64 {

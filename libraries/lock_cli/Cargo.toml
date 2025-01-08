@@ -1,0 +1,34 @@
+[package]
+name = "lock-cli"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+devnet = ["raydium-amm-v3/devnet", "raydium-cp-swap/devnet"]
+
+[dependencies]
+anchor-client = "=0.29.0"
+anchor-lang = "=0.29.0"
+anchor-spl = "=0.29.0"
+common = { path = "../common" }
+spl-token = { version = "=4.0.0", features = ["no-entrypoint"] }
+spl-associated-token-account = { version = "2.2.0", features = [
+    "no-entrypoint",
+] }
+spl-token-2022 = { version = "=0.9.0", features = ["no-entrypoint"] }
+raydium-amm-v3 = { git = "https://github.com/raydium-io/raydium-clmm", features = [
+    "client",
+] }
+raydium-cp-swap = { git = "https://github.com/raydium-io/raydium-cp-swap", features = [
+    "client",
+] }
+anyhow = "1.0.53"
+solana-sdk = "<1.17.0"
+solana-client = "<1.17.0"
+clap = { version = "4.1.8", features = ["derive"] }
+rand = "0.7.3"
+borsh = "0.10"
+borsh-derive = "0.10"
+
+[lib]
+crate-type = ["cdylib", "lib"]

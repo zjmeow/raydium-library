@@ -4,6 +4,7 @@ members = [
     "libraries/amm_cli",
     "libraries/cpswap_cli",
     "libraries/clmm_cli",
+    "libraries/lock_cli",
     "libraries/common",
     "client",
 ]
